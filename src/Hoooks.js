@@ -7,7 +7,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default function AppView(){
 
   const [nome, setNome] = useState('');
-  const [input, setInput] = useState('');   
+  const [input, setInput] = useState('');
+
+  //useEffect(()=>{}, []);  
 
   useEffect(()=>{
     async function getStorage(){
@@ -16,6 +18,7 @@ export default function AppView(){
         setNome(nomeStorage);
       }
     }
+
     getStorage();
   }, []);
 
@@ -37,9 +40,10 @@ export default function AppView(){
         placeholder = 'Digite seu nome'
         value={input}
         onChangeText ={(texto)=> setInput(texto)}
-        style= {{backgroundColor: '#CDFC', width: 300, padding: 5,
-                 }}
-      />     
+        style= {{backgroundColor: '#CDFC', width: 300}}
+      />
+        
+     
       <TouchableOpacity style={styles.btn} onPress={alteraNome}>
         <Text style={styles.btnText}>
           Alterar Nome
@@ -53,19 +57,14 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     marginTop: 15,
-    marginLeft: 30,
+    marginLeft: 30
   },
   texto:{
     fontSize:30,
   },
   btn:{
-    backgroundColor: '#2A8751',
+    backgroundColor: '#CCCC',
     width: 300,
-    alignItems: 'center',
-    padding: 5,
-
-  },
-  btnText:{
-    color: '#FFF',
-  },
+    alignItems: 'center'
+  }
 })
