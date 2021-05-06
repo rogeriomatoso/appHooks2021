@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo, useRef} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -9,7 +9,6 @@ export default function AppView(){
 
   const [nome, setNome] = useState('');
   const [input, setInput] = useState('');   
-  const nomeInput = useRef(null);
 
   useEffect(()=>{
     async function getStorage(){
@@ -33,13 +32,10 @@ export default function AppView(){
     setInput('');
   }
 
-  function novoNome(){
-    nomeInput.current.focus();
-  }
-
-  const letrasNome = useMemo(() => {    
+  const letrasNome = useMemo(() => {
+    console.log('Alterou...');
     return nome.length;
-  }, [nome]) 
+  }, [nome])
   
 
   return(
@@ -48,8 +44,8 @@ export default function AppView(){
         placeholder = 'Digite seu nome'
         value={input}
         onChangeText ={(texto)=> setInput(texto)}
-        style= {{backgroundColor: '#CDFC', width: 300, padding: 5, }}
-        ref={nomeInput}
+        style= {{backgroundColor: '#CDFC', width: 300, padding: 5,
+                 }}
       />     
       <TouchableOpacity style={styles.btn} onPress={alteraNome}>
         <Text style={styles.btnText}>
@@ -57,10 +53,7 @@ export default function AppView(){
         </Text>
       </TouchableOpacity>
       <Text style={styles.texto}>{nome}</Text>
-      <Text style={styles.contador}> A palavra tem {letrasNome} letras</Text>
-      <TouchableOpacity style={styles.btnNovoNome}  onPress={novoNome}>
-        <Text>Adicionar Nome</Text>
-      </TouchableOpacity>
+      <Text style={styles.contador}>{letrasNome}</Text>
     </View>
   )
 }
@@ -72,7 +65,6 @@ const styles = StyleSheet.create({
   },
   texto:{
     fontSize:30,
-    marginBottom:10,
   },
   btn:{
     backgroundColor: '#2A8751',
@@ -86,12 +78,5 @@ const styles = StyleSheet.create({
   },
   contador:{
     fontSize: 16,
-    marginBottom:10,
   },
-  btnNovoNome:{
-    backgroundColor: '#706A91',
-    alignItems: 'center',
-    padding: 5,
-    width:300,
-  }
 })
